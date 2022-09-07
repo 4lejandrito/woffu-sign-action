@@ -1,0 +1,17 @@
+name: Woffu Sign
+description: "Signs in Woffu"
+inputs:
+  namespace:
+    description: "Woffu's namespace in https://{namespace}.woffu.com"
+  token:
+    description: "Woffu's bearer token"
+    required: true
+  user-id:
+    description: "Woffu's user id"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Sign
+      run: "curl https://${{ inputs.namespace }}.woffu.com/api/svc/signs/signs -H 'Content-Type: application/json;charset=utf-8' -H 'Authorization: Bearer ${{ inputs.token }}' --data-raw '{\"UserId\":${{ inputs.user-id }},\"DeviceId\":\"WebApp\"}'"
+      shell: bash
